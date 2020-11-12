@@ -1,0 +1,48 @@
+version: '3.3'
+
+services:
+  thefrenchvapoteur-web:
+    container_name: thefrenchvapoteur-web
+    build:
+      context: client
+    ports:
+      - ${PORT_ANGULAR}:80
+    depends_on:
+      - thefrenchvapoteur-node
+    env_file:
+      - ./.env
+
+
+  thefrenchvapoteur-node:
+    container_name: thefrenchvapoteur-node
+    build:
+      context: server
+      dockerfile: Dockerfile
+    ports:
+      - ${PORT_BACK}:8080
+    depends_on:
+      - mariadb
+    volumes:
+      - ./server/modules/pictures/picturesProjects:/app/server/modules/pictures/picturesProjects:z
+    env_file:
+      - ./.env
+
+  mariadb:
+    container_name: thefrenchvapoteur-bdd
+    build:
+      context: BDD
+      dockerfile: Dockerfile
+    volumes:
+      - ./BDD/data:/var/lib/mysql:z
+    env_file:
+      - ./.env
+    expose:
+      - 3306
+
+  adminer:
+    container_name: thefrenchvapoteur-adminer
+    image: adminer
+    depends_on:
+      - mariadb
+    ports:
+      - ${PORT_ADMINER}:8080

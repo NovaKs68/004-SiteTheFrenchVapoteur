@@ -1,0 +1,55 @@
+version: '3.3'
+
+services:
+  thefrenchvapoteur-web-dev:
+    container_name: thefrenchvapoteur-web-dev
+    build:
+      context: ./client
+      dockerfile: Dockerfile-dev
+    command: npm run start-docker
+    volumes:
+      - ./client:/app
+      - /app/node_modules
+    ports:
+      - 4200:4200
+    depends_on:
+      - thefrenchvapoteur-node-dev
+    env_file:
+      - ./.env
+
+
+  thefrenchvapoteur-node-dev:
+    container_name: thefrenchvapoteur-node-dev
+    build:
+      context: ./server
+      dockerfile: Dockerfile-dev
+    command: ["nodemon", "index.js"]
+    ports:
+      - 8080:8080
+    volumes:
+      - ./server:/app
+      - /app/node_modules
+    depends_on:
+      - mariadb
+    env_file:
+      - ./.env
+
+  mariadb:
+    container_name: thefrenchvapoteur-bdd-dev
+    build:
+      context: BDD
+      dockerfile: Dockerfile-dev
+    volumes:
+      - ./BDD/data:/var/lib/mysql:z
+    env_file:
+      - ./.env
+    expose:
+      - 3306
+
+  adminer:
+    container_name: thefrenchvapoteur-adminer-dev
+    image: adminer
+    depends_on:
+      - mariadb
+    ports:
+      - ${PORT_ADMINER}:8080
