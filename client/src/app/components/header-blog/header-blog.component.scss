@@ -1,0 +1,81 @@
+
+/* The container <div> - needed to position the dropdown content */
+.dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+/* Dropdown Content (Hidden by Default) */
+.dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: #171717;
+  min-width: 160px;
+  z-index: 1;
+}
+
+/* Links inside the dropdown */
+.dropdown-content a {
+  color: white;
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+}
+
+/* Change color of dropdown links on hover */
+.dropdown-content a:hover {background-color: #AA2222;}
+
+/* Show the dropdown menu on hover */
+.dropdown:hover .dropdown-content {display: block;}
+
+#navBar {
+  background-color: #171717;
+  height: 40px;
+}
+
+.textContent {
+  color: white;
+  text-decoration: none;
+  text-align: center;
+  padding: 8px;
+}
+
+.colorHover:hover {
+  background-color: #AA2222;
+}
+
+#redBottomNavBar {
+  height: 4px;
+  background-color: #AA2222;
+}
+
+.dropbtn {
+  cursor: pointer;
+  font-size: 16px;
+  border: none;
+  outline: none;
+  color: white;
+  padding: 8px 1px;
+  background-color: inherit;
+  font-family: inherit;
+  margin: 0;
+}
+
+#greyBox {
+  height: 120px;
+  background-color: #EEEEEE;
+}
+
+.btn {
+background-color: #C4C4C4;
+}
+
+#searchBar {
+  background-color: #EEEEEE;
+}
+
+#logo {
+  position: absolute; /* postulat de départ */
+  top: 120px; left: 50%; /* à 50%/50% du parent référent */
+  transform: translate(-50%, -50%); /* décalage de 50% de sa propre taille */
+}
