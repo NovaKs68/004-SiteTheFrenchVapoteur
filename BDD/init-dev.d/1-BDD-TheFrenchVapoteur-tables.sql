@@ -37,8 +37,8 @@ CREATE TABLE articles (
         id_article SMALLINT NOT NULL AUTO_INCREMENT,
         title_main VARCHAR(255) NOT NULL,
         resume VARCHAR(255) NOT NULL,
-        grade SMALLINT(2) NOT NULL,
-        opinion VARCHAR(255) NOT NULL,
+        grade SMALLINT(2),
+        opinion TEXT(600),
         date_creation DATE NOT NULL,
         date_modification DATE,
         PRIMARY KEY (id_article)

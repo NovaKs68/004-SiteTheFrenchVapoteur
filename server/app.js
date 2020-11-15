@@ -14,6 +14,6 @@ app.use((req, res, next) => {
 });
 
 // Routes de l'application
-app.use('/api/article', articleRoutes);
+app.use('/api/articles', articleRoutes);
 
 module.exports = app;
