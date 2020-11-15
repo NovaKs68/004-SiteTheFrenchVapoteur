@@ -18,8 +18,6 @@ Engine = INNODB;
 ----------------------Table users----------------------
 CREATE TABLE users (
         id_user SMALLINT NOT NULL AUTO_INCREMENT,
-        forename VARCHAR(255) NOT NULL,
-        name VARCHAR(255) NOT NULL,
         pseudo VARCHAR(255) NOT NULL,
         mail VARCHAR(255) NOT NULL,
         password VARCHAR(255) NOT NULL,
@@ -39,6 +37,8 @@ CREATE TABLE articles (
         id_article SMALLINT NOT NULL AUTO_INCREMENT,
         title_main VARCHAR(255) NOT NULL,
         resume VARCHAR(255) NOT NULL,
+        grade SMALLINT(2) NOT NULL,
+        opinion VARCHAR(255) NOT NULL,
         date_creation DATE NOT NULL,
         date_modification DATE,
         PRIMARY KEY (id_article)
