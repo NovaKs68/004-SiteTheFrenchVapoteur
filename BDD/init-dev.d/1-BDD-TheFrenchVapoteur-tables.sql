@@ -69,6 +69,19 @@ CREATE TABLE articles_titles (
 )
 Engine = INNODB;
 
+----------------------Table articles_comment----------------------
+CREATE TABLE articles_comment (
+        id_comment SMALLINT NOT NULL AUTO_INCREMENT,
+        id_article SMALLINT NOT NULL,
+        pseudo VARCHAR(255) NOT NULL,
+        content VARCHAR(255) NOT NULL,
+        PRIMARY KEY (id_comment),
+        CONSTRAINT fk_article_id_comment
+            FOREIGN KEY (id_article)
+            REFERENCES articles(id_article)
+)
+Engine = INNODB;
+
 ----------------------Table articles_plan----------------------
 
 ----------------------Table tags----------------------
