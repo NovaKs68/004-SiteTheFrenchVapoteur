@@ -37,6 +37,7 @@ CREATE TABLE articles (
         id_article SMALLINT NOT NULL AUTO_INCREMENT,
         title_main VARCHAR(255) NOT NULL,
         resume VARCHAR(255) NOT NULL,
+        name_image_main VARCHAR(100) NOT NULL,
         grade SMALLINT(2),
         opinion TEXT(600),
         date_creation DATE NOT NULL,
@@ -109,4 +110,26 @@ CREATE TABLE articles_tags (
 )
 Engine = INNODB;
 
+----------------------Table images----------------------
+CREATE TABLE images (
 
+        id_image SMALLINT NOT NULL AUTO_INCREMENT,
+        name VARCHAR(100) NOT NULL,
+        PRIMARY KEY (id_image)
+
+)
+Engine = INNODB;
+
+----------------------Table articles_images----------------------
+CREATE TABLE articles_images (
+        id_image SMALLINT NOT NULL,
+        id_article SMALLINT NOT NULL,
+        PRIMARY KEY (id_article, id_image),
+            CONSTRAINT fk_articles_images_articles
+                FOREIGN KEY (id_article)
+                REFERENCES articles(id_article),
+            CONSTRAINT fk_articles_images_images
+                FOREIGN KEY (id_image)
+                REFERENCES images(id_image)
+)
+Engine = INNODB;
