@@ -26,9 +26,13 @@ exports.getOne = (req, res, next) => {
 
 exports.create = (req, res, next) => {
     // check token
-    const image = JSON.parse(req.body.image)
-    const content = [[req.body.title_project],[req.body.picture_project],[req.body.resume_project]]
-    db.query('INSERT INTO articles (id_article, title_main, resume, grade, opinion, date_creation, date_modification) VALUES (NULL, ?, ?, ?, ?, ?, ?)',content, (error, rows) => {
+    const images = JSON.parse(req.body.images);
+    const image_main = JSON.parse(req.body.image_main)
+    const content = [[req.body.title_main],[req.body.resume],[`${req.protocol}://${req.get('host')}/pictures/${image_main.filename}`],[req.body.grade],[req.body.opinion],[req.body.date_creation],[req.body.date_modification]];
+    // Le host ci dessous est a changer par la racine du server. A voir avec le .env
+    images.forEach(image => content.push(`${req.protocol}://${req.get('host')}/pictures/${image.filename}`));
+    console.log(content);
+    db.query('INSERT INTO articles (id_article, title_main, resume, name_image_main, grade, opinion, date_creation, date_modification) VALUES (NULL, ?, ?, ?, ?, ?, ?)',content, (error, rows) => {
         if(error){
             res.status(400).json({sucess: false, error});
         } else {
