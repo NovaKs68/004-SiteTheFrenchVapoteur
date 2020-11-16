@@ -21,3 +21,18 @@ exports.getOne = (req, res, next) => {
         }
     });
 };
+
+// Pas fini
+
+exports.create = (req, res, next) => {
+    // check token
+    const image = JSON.parse(req.body.image)
+    const content = [[req.body.title_project],[req.body.picture_project],[req.body.resume_project]]
+    db.query('INSERT INTO articles (id_article, title_main, resume, grade, opinion, date_creation, date_modification) VALUES (NULL, ?, ?, ?, ?, ?, ?)',content, (error, rows) => {
+        if(error){
+            res.status(400).json({sucess: false, error});
+        } else {
+            res.status(200).json({response: rows[0],sucess: true});
+        }
+    });
+};
