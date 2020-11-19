@@ -1,6 +1,7 @@
 const express = require('express');
 const articleRoutes = require('./routes/article');
 const path = require('path');
+const bodyParser = require("body-parser");
 
 const app = express();
 
@@ -15,6 +16,7 @@ app.use((req, res, next) => {
 });
 
 app.use('/images', express.static(path.join(__dirname, 'images')));
+
 
 // Routes de l'application
 app.use('/api/articles', articleRoutes);

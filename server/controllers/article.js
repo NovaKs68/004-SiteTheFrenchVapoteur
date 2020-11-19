@@ -26,13 +26,14 @@ exports.getOne = (req, res, next) => {
 
 exports.create = (req, res, next) => {
     // check token
-    const images = JSON.parse(req.body.images);
-    const image_main = JSON.parse(req.body.image_main)
-    const content = [[req.body.title_main],[req.body.resume],[`${req.protocol}://${req.get('host')}/pictures/${image_main.filename}`],[req.body.grade],[req.body.opinion],[req.body.date_creation],[req.body.date_modification]];
+    let article = req.body.article;
+    let files = [];
+    req.body.files.forEach((element) => {
+        files.push(`${req.protocol}://${req.get('host')}/pictures/${element.name}`);
+    });
     // Le host ci dessous est a changer par la racine du server. A voir avec le .env
-    images.forEach(image => content.push(`${req.protocol}://${req.get('host')}/pictures/${image.filename}`));
-    console.log(content);
-    db.query('INSERT INTO articles (id_article, title_main, resume, name_image_main, grade, opinion, date_creation, date_modification) VALUES (NULL, ?, ?, ?, ?, ?, ?)',content, (error, rows) => {
+
+    db.query('INSERT INTO articles (id_article, title_main, resume, name_image_main, grade, opinion, date_creation, date_modification) VALUES (NULL, ?, ?, ?, ?, ?, ?)',article, (error, rows) => {
         if(error){
             res.status(400).json({sucess: false, error});
         } else {

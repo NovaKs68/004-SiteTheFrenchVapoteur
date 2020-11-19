@@ -1,4 +1,6 @@
 import { Injectable } from '@angular/core';
+import {ArrayType} from "@angular/compiler";
+import {Article} from "../models/article.model";
 
 @Injectable({
   providedIn: 'root'
@@ -38,6 +40,32 @@ export class ArticlesService {
             console.log(data);
             resolve(data);
           });
+        })
+        .catch((err) => {
+          console.log('Fetch Error : ', err);
+          reject(err);
+        });
+    });
+  }
+
+  // titleMain: string, resume: string, imageMain: File, grade: number, opinion: string, dateCreation: string, dateModification: string, images: File[]
+
+  postArticle(article: Article, files: File[]): any {
+    return new Promise((resolve, reject) => {
+      const articleData = new FormData();
+      console.log('OUHO ' + files[1].name);
+      articleData.append('article', JSON.stringify({ article }));
+      files.forEach(element => {
+        articleData.append('files', element);
+      });
+      console.log('article data : ' + articleData.get('imageMain'));
+      fetch('http://localhost:8080/api/articles/', {
+        method: 'POST',
+        body: articleData
+      })
+        .then((response) => {
+          console.log(response);
+          resolve(response.status);
         })
         .catch((err) => {
           console.log('Fetch Error : ', err);

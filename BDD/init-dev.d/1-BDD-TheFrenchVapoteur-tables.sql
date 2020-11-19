@@ -115,6 +115,7 @@ CREATE TABLE images (
 
         id_image SMALLINT NOT NULL AUTO_INCREMENT,
         name VARCHAR(100) NOT NULL,
+        desciption VARCHAR(255) NOT NULL,
         PRIMARY KEY (id_image)
 
 )

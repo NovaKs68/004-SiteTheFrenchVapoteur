@@ -7,6 +7,7 @@ import { HeaderBlogComponent } from './components/header-blog/header-blog.compon
 import {RouterModule, Routes} from '@angular/router';
 import { BlogViewComponent } from './pages/blog-view/blog-view.component';
 import { ArticleCardComponent } from './components/article-card/article-card.component';
+import {ReactiveFormsModule} from "@angular/forms";
 
 const appRoutes: Routes = [
   { path: '', component: BlogViewComponent },
@@ -19,11 +20,12 @@ const appRoutes: Routes = [
     BlogViewComponent,
     ArticleCardComponent
   ],
-  imports: [
-    BrowserModule,
-    AppRoutingModule,
-    RouterModule.forRoot(appRoutes)
-  ],
+    imports: [
+        BrowserModule,
+        AppRoutingModule,
+        RouterModule.forRoot(appRoutes),
+        ReactiveFormsModule
+    ],
   providers: [],
   bootstrap: [AppComponent]
 })

@@ -1,1 +1,52 @@
-<p>article-card works!</p>
+<div id="box" class="container">
+  <form [formGroup]="articleForm" class="row" (ngSubmit)="onSubmit()">
+    <!-- title -->
+    <label for="title">Titre de l'article :
+      <input type="text" name="title" id="title" formControlName="titleMain">
+    </label>
+    <!-- resume -->
+    <label for="resume">Résumé de l'article :
+      <input type="text" name="resume" id="resume" formControlName="resume">
+    </label>
+    <!-- image main -->
+    <input type="file" (change)="onUpload($event)" formControlName="imageMain">
+    <div class="image-preview" *ngIf="currentImage">
+      <img src="{{currentImage}}" alt="">
+    </div>
+
+    <!-- grade -->
+    <label for="grade">Note de l'article /10 :
+      <input type="number" name="grade" id="grade" formControlName="grade">
+    </label>
+
+    <!-- opinion -->
+    <label for="opinion">Avis sur l'article :
+      <input type="text" name="opinion" id="opinion" formControlName="opinion">
+    </label>
+
+    <!-- dateCreation -->
+    <label for="dateCreation">Date de création :
+      <input type="date" name="dateCreation" id="dateCreation" formControlName="dateCreation">
+    </label>
+
+    <!-- dateModification -->
+    <label for="dateModification">Date de création :
+      <input type="date" name="dateModification" id="dateModification" formControlName="dateModification">
+    </label>
+
+    <!-- images -->
+    <div>
+      <ul>
+        <li *ngFor="let file of files">
+          <img class="preview-image" [src]="file ? file.link : 'localhost/image.png'">
+        </li>
+      </ul>
+
+      <button type="button" onclick="document.querySelector('#files').click()"></button>
+      <input type="file" id="files" (change)="imagesPreview($event)" style="display: none;">
+    </div>
+
+    <button type="submit" [disabled]="!articleForm.valid" (click)="save()">Submit</button>
+  </form>
+
+</div>
