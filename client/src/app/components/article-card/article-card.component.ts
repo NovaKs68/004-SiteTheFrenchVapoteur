@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import * as $ from 'jquery';
-import {Form, FormControl, FormGroup} from '@angular/forms';
+import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {ArticlesService} from '../../services/articles.service';
 import { Article } from '../../models/article.model';
+import { mimeType } from '../../mime-type.validator';
 
 @Component({
   selector: 'app-article-card',
@@ -11,25 +12,26 @@ import { Article } from '../../models/article.model';
 })
 export class ArticleCardComponent implements OnInit {
 
+  public articleForm: FormGroup;
   imageFile: {link: string, file: any, name: string};
   files = [];
   public imagePreview: string;
   file: any;
   currentImage;
-  articleForm = new FormGroup({
-    titleMain: new FormControl(' '),
-    resume: new FormControl(' '),
-    imageMain: new FormControl(' '),
-    grade: new FormControl(' '),
-    opinion: new FormControl(' '),
-    dateCreation: new FormControl(' '),
-    dateModification: new FormControl(' '),
-    images: new FormControl(' ')
-  });
 
-  constructor(private articlesService: ArticlesService) { }
+  constructor(private articlesService: ArticlesService,
+              private formBuilder: FormBuilder) { }
 
   ngOnInit(): void {
+    this.articleForm = this.formBuilder.group({
+      titleMain: [null, Validators.required],
+      resume: [null, Validators.required],
+      grade: [0, Validators.required],
+      opinion: [0, Validators.required],
+      dateCreation: [0, Validators.required],
+      dateModification: [0, Validators.required],
+      image: [null, Validators.required, mimeType]
+    });
   }
 
   onSubmit(): void {
@@ -42,9 +44,12 @@ export class ArticleCardComponent implements OnInit {
     article.dateCreation = this.articleForm.get('dateCreation').value;
     article.dateModification = this.articleForm.get('dateModification').value;
 
+    console.log('Le contre file ' + this.files);
+    console.log( 'le file ' + this.articleForm.get('image').value);
+
+
     this.articlesService.postArticle(article, this.files);
 
-    console.log(this.files);
     console.warn(this.articleForm.value);
   }
 
@@ -74,40 +79,24 @@ export class ArticleCardComponent implements OnInit {
         };
         reader.readAsDataURL(event.target.files[0]);
       }
-    })
-      .then((value) => {
-        this.files.push(value);
-        return value;
-      });
+    });
   }
 
-
-  save(): void {
-    /*const formData = new FormData();
-    formData.append('myImageToSend', this.imageFile.file);
-    formData.append('title', 'Set your title name here');
-    formData.append('description', 'Set your title description here');
-
-    console.log(formData);
-    // this.clientService.create(formData).subscribe(data => {});*/
+  onImagePick(event: Event): any {
+    const file = (event.target as HTMLInputElement).files[0];
+    this.articleForm.get('image').patchValue(file);
+    this.articleForm.get('image').updateValueAndValidity();
+    const reader = new FileReader();
+    reader.onload = () => {
+      if (this.articleForm.get('image').valid) {
+        this.imagePreview = reader.result as string;
+      } else {
+        this.imagePreview = null;
+      }
+    };
+    reader.readAsDataURL(file);
+    this.files.push(file);
+    console.log(this.files);
   }
 }
 
-
-
-/*onUpload(event): void {
-  if (event.target.files && event.target.files[0]) {
-  const file = (event.target as HTMLInputElement).files[0];
-  this.file.get('image').patchValue(file);
-  this.file.get('image').updateValueAndValidity();
-  const reader = new FileReader();
-  reader.onload = (rdr) => {
-    if (this.file.get('image').valid) {
-      this.currentImage = reader.result as string;
-    } else {
-      this.currentImage = null;
-    }
-  };
-  reader.readAsDataURL(event.target.files[0]);
-}
-}*/

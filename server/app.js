@@ -15,8 +15,8 @@ app.use((req, res, next) => {
   next();
 });
 
+// Permet de donner l'accès aux images
 app.use('/images', express.static(path.join(__dirname, 'images')));
-
 
 // Routes de l'application
 app.use('/api/articles', articleRoutes);

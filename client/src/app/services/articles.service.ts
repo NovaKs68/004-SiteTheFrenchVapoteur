@@ -53,12 +53,10 @@ export class ArticlesService {
   postArticle(article: Article, files: File[]): any {
     return new Promise((resolve, reject) => {
       const articleData = new FormData();
-      console.log('OUHO ' + files[1].name);
       articleData.append('article', JSON.stringify({ article }));
-      files.forEach(element => {
-        articleData.append('files', element);
+      files.forEach(file => {
+        articleData.append('image', file);
       });
-      console.log('article data : ' + articleData.get('imageMain'));
       fetch('http://localhost:8080/api/articles/', {
         method: 'POST',
         body: articleData

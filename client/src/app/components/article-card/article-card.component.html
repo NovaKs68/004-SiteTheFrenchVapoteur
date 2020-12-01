@@ -8,11 +8,6 @@
     <label for="resume">Résumé de l'article :
       <input type="text" name="resume" id="resume" formControlName="resume">
     </label>
-    <!-- image main -->
-    <input type="file" (change)="onUpload($event)" formControlName="imageMain">
-    <div class="image-preview" *ngIf="currentImage">
-      <img src="{{currentImage}}" alt="">
-    </div>
 
     <!-- grade -->
     <label for="grade">Note de l'article /10 :
@@ -35,18 +30,13 @@
     </label>
 
     <!-- images -->
-    <div>
-      <ul>
-        <li *ngFor="let file of files">
-          <img class="preview-image" [src]="file ? file.link : 'localhost/image.png'">
-        </li>
-      </ul>
-
-      <button type="button" onclick="document.querySelector('#files').click()"></button>
-      <input type="file" id="files" (change)="imagesPreview($event)" style="display: none;">
+    <button class="btn btn-success" type="button" (click)="filePicker.click()">Ajouter image</button>
+    <input type="file" #filePicker (change)="onImagePick($event)">
+    <div class="image-preview" *ngIf="imagePreview">
+      <img [src]="imagePreview" alt="">
     </div>
 
-    <button type="submit" [disabled]="!articleForm.valid" (click)="save()">Submit</button>
+    <button type="submit" [disabled]="!articleForm.valid">Submit</button>
   </form>
 
 </div>

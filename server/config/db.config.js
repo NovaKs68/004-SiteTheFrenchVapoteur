@@ -8,6 +8,7 @@ db  = mysql.createPool({
     user            : 'rootSQL',
     password        : 'rootsql',
     database        : 'thefrenchvapoteur',
+    multipleStatements: true
 });
 
 
