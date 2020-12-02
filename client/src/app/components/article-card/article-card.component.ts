@@ -18,6 +18,7 @@ export class ArticleCardComponent implements OnInit {
   public imagePreview: string;
   file: any;
   currentImage;
+  urlImageDemo: string;
 
   constructor(private articlesService: ArticlesService,
               private formBuilder: FormBuilder) { }
@@ -48,9 +49,13 @@ export class ArticleCardComponent implements OnInit {
     console.log( 'le file ' + this.articleForm.get('image').value);
 
 
-    this.articlesService.postArticle(article, this.files);
-
+    const articles = this.articlesService.getOneArticle(5);
     console.warn(this.articleForm.value);
+  }
+
+  ok() {
+    const articles = this.articlesService.getOneArticle(5);
+    articles.then(data => this.urlImageDemo = data.name_image_main);
   }
 
   onUpload(event): void {

@@ -29,7 +29,7 @@ export class ArticlesService {
     });
   }
 
-  getOneArticle(idArticles: number): any {
+  getOneArticle(idArticles: number): Promise<any> {
     return new Promise((resolve, reject) => {
       fetch('http://localhost:8080/api/articles/' + idArticles, {
         method: 'GET',
@@ -37,8 +37,7 @@ export class ArticlesService {
       })
         .then((response) => {
           response.json().then((data) => {
-            console.log(data);
-            resolve(data);
+            resolve(data.response[0]);
           });
         })
         .catch((err) => {
@@ -64,6 +63,25 @@ export class ArticlesService {
         .then((response) => {
           console.log(response);
           resolve(response.status);
+        })
+        .catch((err) => {
+          console.log('Fetch Error : ', err);
+          reject(err);
+        });
+    });
+  }
+
+  getAllImages(): any {
+    return new Promise((resolve, reject) => {
+      fetch('http://localhost:8080/api/articles/images/', {
+        method: 'GET',
+        headers: { 'Content-type': 'application/json; charset=UTF-8' }
+      })
+        .then((response) => {
+          response.json().then((data) => {
+            console.log(data);
+            resolve(data);
+          });
         })
         .catch((err) => {
           console.log('Fetch Error : ', err);
